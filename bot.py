@@ -2,6 +2,8 @@ import discord
 from discord.ext import commands
 import os
 
+exec(open("cleanup.py").read())
+
 intents = discord.Intents.default()
 intents.typing = False
 intents.presences = False
@@ -75,11 +77,22 @@ async def lyrics(ctx, action, *, song_name):
             await ctx.send(f"Lyrics for '{song_name}' not found.")
             return
 
-        # Read and display the contents of the text file
+        # Read the contents of the text file
         try:
             with open(file_path, "r", encoding="utf-8") as file:
                 lyrics = file.read()
-            await ctx.send(f"Lyrics for '{song_name}':\n```{lyrics}```")
+
+            # Split the lyrics into smaller chunks
+            max_chunk_length = 1900  # Ensure the chunks fit within Discord's message limit
+            lyric_chunks = [lyrics[i:i+max_chunk_length] for i in range(0, len(lyrics), max_chunk_length)]
+
+            # Send the song name once
+            await ctx.send(f"Lyrics for '{song_name}':")
+
+            # Send each chunk as a separate message
+            for chunk in lyric_chunks:
+                await ctx.send(f"```{chunk}```")
+
         except Exception as e:
             print("Error:", e)  # Debugging line
             await ctx.send(f"Error reading lyrics for '{song_name}'.")
