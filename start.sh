@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Run the Discord bot
 python bot.py
