@@ -1,7 +1,3 @@
 #!/bin/sh
-
-# Run the Discord bot
-python bot.py
-
-# Keep the terminal open so you can view the bot's output
-read -p "Press Enter to exit"
+python bot.py # Run the Discord bot
+read -p "Press Enter to exit" # Keep the terminal open so you can view the bot's output
